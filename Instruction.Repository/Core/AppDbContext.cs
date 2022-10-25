@@ -26,6 +26,7 @@ namespace Instruction.Repository.Core
             modelBuilder.Entity<OutboxMessage>(entity =>
             {
                 entity.HasKey(x => x.Id);
+                entity.Property(x => x.ProcessedDate).IsRequired(false);
             });
         }
     }

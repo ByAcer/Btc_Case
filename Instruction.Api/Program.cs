@@ -1,5 +1,4 @@
 using FluentValidation.AspNetCore;
-using Instruction.Api.BackgroundServices;
 using Instruction.Api.Filters;
 using Instruction.ApplicationService;
 using Instruction.ApplicationService.MapProfiles;
@@ -42,7 +41,6 @@ builder.Services.AddDbContext<AppDbContext>(o =>
 );
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
-//builder.Services.AddHostedService<OutboxMessagePublisherBackgroundService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

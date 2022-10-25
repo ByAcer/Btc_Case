@@ -8,9 +8,9 @@
 
     public enum NotificationType
     {
-        Sms,
-        EMail,
-        Notification
+        Sms=1,
+        EMail=2,
+        Notification=3
     }
     public enum OrderStatusType
     {

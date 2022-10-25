@@ -41,6 +41,7 @@ namespace Instruction.Api.Controllers
             var response = await _instructionApplicationService.CreateInstructionOrder(request);
             return CreateActionResult(response);
         }
+
         [HttpDelete("{userId:guid}")]
         public async Task<IActionResult> CancelInstructionOrder(Guid userId)
         {
@@ -52,6 +53,13 @@ namespace Instruction.Api.Controllers
         public async Task<IActionResult> CompletedInstructionOrder(Guid userId)
         {
             var response = await _instructionApplicationService.ComplatedInstructionOrderByUserId(userId);
+            return CreateActionResult(response);
+        }
+
+        [HttpGet("outbox-list")]
+        public async Task<IActionResult> GetOutboxMessage()
+        {
+            var response = await _instructionApplicationService.GetOutboxList();
             return CreateActionResult(response);
         }
     }

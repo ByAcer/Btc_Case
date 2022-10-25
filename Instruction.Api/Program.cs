@@ -1,14 +1,17 @@
 using FluentValidation.AspNetCore;
+using Instruction.Api.BackgroundServices;
 using Instruction.Api.Filters;
 using Instruction.ApplicationService;
 using Instruction.ApplicationService.MapProfiles;
 using Instruction.Domain.Core;
+using Instruction.Domain.MessageBroker;
 using Instruction.Domain.Repositories;
 using Instruction.Domain.Validations;
 using Instruction.Repository.Core;
 using Instruction.Repository.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers(options => options.Filters.Add(new ValidateFilterAttribute()))
@@ -20,19 +23,27 @@ builder.Services.Configure<ApiBehaviorOptions>(options =>
 
 });
 
+builder.Services.AddSingleton<MessageBrokerClientService>();
+builder.Services.AddSingleton<MessageBrokerPublisher>();
+builder.Services.AddSingleton((sp) => new ConnectionFactory()
+{
+    Uri = new Uri(builder.Configuration.GetConnectionString("RabbitMQ")),
+    DispatchConsumersAsync = true
 
+});
 // Add services to the container.
 builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IInstructionOrderRepository, InstructionOrderRepository>();
 builder.Services.AddScoped<IInstructionApplicationService, InstructionApplicationService>();
 
-builder.Services.AddDbContext<AppDbContext>(o => o.UseInMemoryDatabase("InstructionOrderDb"));
+builder.Services.AddDbContext<AppDbContext>(o =>
+    o.UseSqlServer(builder.Configuration.GetConnectionString("SqlServer"))
+);
 
 builder.Services.AddAutoMapper(typeof(MapProfile));
+//builder.Services.AddHostedService<OutboxMessagePublisherBackgroundService>();
 
-
-//builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

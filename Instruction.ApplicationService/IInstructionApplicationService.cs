@@ -10,6 +10,7 @@ public interface IInstructionApplicationService
     Task<BaseResponseDto<List<InstructionOrder>>> GetInstructionOrderList();
     Task<BaseResponseDto<bool>> CreateInstructionOrder(InstructionOrderCreateRequestDto request);
     Task<BaseResponseDto<string>> CancelInstructionOrder(Guid userId);
-    Task<BaseResponseDto<int[]>> GetInstructionNotificationsByUserId(Guid userId);
+    Task<BaseResponseDto<int>> GetInstructionNotificationsByUserId(Guid userId);
     Task<BaseResponseDto<string>> ComplatedInstructionOrderByUserId(Guid userId);
+    Task<BaseResponseDto<List<OutboxMessage>>> GetOutboxList();
 }

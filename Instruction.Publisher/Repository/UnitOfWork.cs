@@ -1,6 +1,6 @@
-﻿using Instruction.Domain.Core;
+﻿using Instruction.Publisher.Domain.Core;
 
-namespace Instruction.Repository.Core;
+namespace Instruction.Publisher.Repository;
 
 public class UnitOfWork : IUnitOfWork
 {

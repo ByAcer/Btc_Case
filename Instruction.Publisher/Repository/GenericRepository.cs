@@ -1,8 +1,8 @@
-﻿using Instruction.Domain.Core;
+﻿using Instruction.Publisher.Domain.Core;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
-namespace Instruction.Repository.Core;
+namespace Instruction.Publisher.Repository;
 
 public class GenericRepository<T> : IGenericRepository<T> where T : class
 {
@@ -49,3 +49,4 @@ public class GenericRepository<T> : IGenericRepository<T> where T : class
         return _dbSet.Where(expression);
     }
 }
+

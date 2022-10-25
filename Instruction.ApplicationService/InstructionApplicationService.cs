@@ -2,11 +2,12 @@
 using Instruction.Domain.Core;
 using Instruction.Domain.MessageBroker;
 using Instruction.Domain.Models;
+using Instruction.Domain.Models.Events;
 using Instruction.Domain.Repositories;
 using Instruction.Domain.ValueObjects;
 using Instruction.Domain.ValueObjects.DTOs.Requests;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace Instruction.ApplicationService
 {
@@ -18,7 +19,7 @@ namespace Instruction.ApplicationService
         private readonly IGenericRepository<OutboxMessage> _genericRepository;
         private readonly MessageBrokerPublisher _messageBrokerPublisher;
 
-        public InstructionApplicationService(IInstructionOrderRepository instructionOrderRepository, IMapper mapper, IUnitOfWork unitOfWork, 
+        public InstructionApplicationService(IInstructionOrderRepository instructionOrderRepository, IMapper mapper, IUnitOfWork unitOfWork,
             IGenericRepository<OutboxMessage> genericRepository, MessageBrokerPublisher messageBrokerPublisher)
         {
             _instructionOrderRepository = instructionOrderRepository;
@@ -47,14 +48,15 @@ namespace Instruction.ApplicationService
             if (isExistsActiveInstractionOrder is null)
                 return BaseResponseDto<string>.Fail(400, Messages.NO_ACTIVE_INSTRUCTURE);
 
-            isExistsActiveInstractionOrder.OrderStatusType = OrderStatusType.Complated;
-            isExistsActiveInstractionOrder.ActionTime = DateTime.Now;
+            isExistsActiveInstractionOrder.SetComplatedInstruction();
 
             _instructionOrderRepository.Update(isExistsActiveInstractionOrder);
-            var payload = JsonSerializer.Serialize(isExistsActiveInstractionOrder);
+            
+            var eventModel = _mapper.Map<InstructionOrderEvent>(isExistsActiveInstractionOrder);
+            var payload = JsonConvert.SerializeObject(eventModel, Newtonsoft.Json.Formatting.Indented);
             var outboxMessages = new OutboxMessage
             {
-                NotificationType = isExistsActiveInstractionOrder.NotificationType,
+                NotificationType = (int)eventModel.NotificationType,
                 Payload = payload,
                 CreatedDate = DateTime.Now,
                 ProcessedDate = null
@@ -77,12 +79,12 @@ namespace Instruction.ApplicationService
             return BaseResponseDto<bool>.Success(200);
         }
 
-        public async Task<BaseResponseDto<int>> GetInstructionNotificationsByUserId(Guid userId)
+        public async Task<BaseResponseDto<string>> GetInstructionNotificationsByUserId(Guid userId)
         {
             var instructionOrders = await _instructionOrderRepository.Where(x => x.UserId == userId).FirstOrDefaultAsync();
             if (instructionOrders is null)
-                return BaseResponseDto<int>.Fail(404, Messages.NO_ACTIVE_INSTRUCTURE);
-            return BaseResponseDto<int>.Success(200, instructionOrders.NotificationType);
+                return BaseResponseDto<string>.Fail(404, Messages.NO_ACTIVE_INSTRUCTURE);
+            return BaseResponseDto<string>.Success(200, ((NotificationType)instructionOrders.NotificationType).GetDescription());
         }
 
         public async Task<BaseResponseDto<InstructionOrder>> GetInstructionOrderByUserId(Guid userId)
@@ -91,23 +93,6 @@ namespace Instruction.ApplicationService
             if (instructionOrders is null)
                 return BaseResponseDto<InstructionOrder>.Fail(404, Messages.NO_ACTIVE_INSTRUCTURE);
             return BaseResponseDto<InstructionOrder>.Success(200, instructionOrders);
-        }
-
-        public async Task<BaseResponseDto<List<InstructionOrder>>> GetInstructionOrderList()
-        {
-            var instructionOrders = await _instructionOrderRepository
-                .Where(x => x.OrderStatusType == OrderStatusType.Created)
-                .OrderByDescending(y => y.ActionTime)
-                .ToListAsync();
-            return BaseResponseDto<List<InstructionOrder>>.Success(200, instructionOrders);
-        }
-
-        public async Task<BaseResponseDto<List<OutboxMessage>>> GetOutboxList()
-        {
-            var instructionOrders = await _genericRepository.GetAll()
-                .OrderBy(y => y.CreatedDate)
-                .ToListAsync();
-            return BaseResponseDto<List<OutboxMessage>>.Success(200, instructionOrders);
         }
     }
 }

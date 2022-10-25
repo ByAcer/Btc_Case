@@ -8,9 +8,6 @@ EXPOSE 443
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
 COPY ["Instruction.Api/Instruction.Api.csproj", "Instruction.Api/"]
-COPY ["Instruction.ApplicationService/Instruction.ApplicationService.csproj", "Instruction.ApplicationService/"]
-COPY ["Instruction.Repository/Instruction.Repository.csproj", "Instruction.Repository/"]
-COPY ["Instruction.Domain/Instruction.Domain.csproj", "Instruction.Domain/"]
 RUN dotnet restore "Instruction.Api/Instruction.Api.csproj"
 COPY . .
 WORKDIR "/src/Instruction.Api"

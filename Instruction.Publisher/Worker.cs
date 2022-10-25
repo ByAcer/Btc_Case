@@ -1,6 +1,8 @@
 using Instruction.Publisher.Domain.Core;
+using Instruction.Publisher.Domain.Events;
 using Instruction.Publisher.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Instruction.Publisher
 {
@@ -38,7 +40,9 @@ namespace Instruction.Publisher
                 var outboxList = await GetOutboxList();
                 foreach (var model in outboxList)
                 {
-                    _publisher.Publish(model);
+
+                    var instructionOrderEvent = JsonConvert.DeserializeObject<InstructionOrderEvent>(model.Payload);
+                    _publisher.Publish(instructionOrderEvent);
                     _logger.LogInformation("Message published: {time}", DateTimeOffset.Now);
                     await EntitySetAsComplated(model);
                 }

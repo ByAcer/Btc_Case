@@ -1,4 +1,6 @@
-﻿namespace Instruction.Domain.ValueObjects
+﻿using System.ComponentModel;
+
+namespace Instruction.Domain.ValueObjects
 {
     public enum LoggingType
     {
@@ -8,9 +10,12 @@
 
     public enum NotificationType
     {
-        Sms=1,
-        EMail=2,
-        Notification=3
+        [Description("Sms Servisi")]
+        Sms = 1,
+        [Description("Mail Servisi")]
+        EMail = 2,
+        [Description("Bildirim Servisi")]
+        Notification = 3
     }
     public enum OrderStatusType
     {

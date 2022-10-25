@@ -15,7 +15,7 @@ namespace Instruction.Domain.Validations
         }
         private bool IsBetweenAcceptableDays(InstructionOrderCreateRequestDto requestDto)
         {
-            return (Enumerable.Range(1, 28).Contains(DateTime.Now.Day));
+            return (Enumerable.Range(1, 28).Contains(DateTime.Today.Day));
         }
     }
 }

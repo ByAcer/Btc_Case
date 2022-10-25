@@ -3,17 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.32804.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instruction.Api", "Instruction.Api\Instruction.Api.csproj", "{8936F1FD-70DB-470E-BFC7-02FED8C90B2F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instruction.Api", "Instruction.Api\Instruction.Api.csproj", "{8936F1FD-70DB-470E-BFC7-02FED8C90B2F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instruction.Repository", "Instruction.Repository\Instruction.Repository.csproj", "{3E9E9F44-5FF5-4BDD-B478-B7607A549C37}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instruction.Repository", "Instruction.Repository\Instruction.Repository.csproj", "{3E9E9F44-5FF5-4BDD-B478-B7607A549C37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instruction.Domain", "Instruction.Domain\Instruction.Domain.csproj", "{F094583C-20C6-410E-857A-5F24B922363F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instruction.Domain", "Instruction.Domain\Instruction.Domain.csproj", "{F094583C-20C6-410E-857A-5F24B922363F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instruction.ApplicationService", "Instruction.ApplicationService\Instruction.ApplicationService.csproj", "{D1A989EE-0110-48B9-AAD9-92A4B3C7F74A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instruction.ApplicationService", "Instruction.ApplicationService\Instruction.ApplicationService.csproj", "{D1A989EE-0110-48B9-AAD9-92A4B3C7F74A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instruction.Notification", "Instruction.Notification\Instruction.Notification.csproj", "{7F6A7839-42D2-43A3-8981-9A6B6DBF0BB8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Instruction.Publisher", "Instruction.Publisher\Instruction.Publisher.csproj", "{E2CDCCE2-3F27-4600-AB7E-9AD25E5FE28C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instruction.Publisher", "Instruction.Publisher\Instruction.Publisher.csproj", "{E2CDCCE2-3F27-4600-AB7E-9AD25E5FE28C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Instruction.Consumer", "Instruction.Consumer\Instruction.Consumer.csproj", "{EAA52759-1AE8-4271-9190-0F230D6B7E76}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{D1A989EE-0110-48B9-AAD9-92A4B3C7F74A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1A989EE-0110-48B9-AAD9-92A4B3C7F74A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1A989EE-0110-48B9-AAD9-92A4B3C7F74A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7F6A7839-42D2-43A3-8981-9A6B6DBF0BB8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7F6A7839-42D2-43A3-8981-9A6B6DBF0BB8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7F6A7839-42D2-43A3-8981-9A6B6DBF0BB8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7F6A7839-42D2-43A3-8981-9A6B6DBF0BB8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E2CDCCE2-3F27-4600-AB7E-9AD25E5FE28C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{E2CDCCE2-3F27-4600-AB7E-9AD25E5FE28C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E2CDCCE2-3F27-4600-AB7E-9AD25E5FE28C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E2CDCCE2-3F27-4600-AB7E-9AD25E5FE28C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAA52759-1AE8-4271-9190-0F230D6B7E76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAA52759-1AE8-4271-9190-0F230D6B7E76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAA52759-1AE8-4271-9190-0F230D6B7E76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAA52759-1AE8-4271-9190-0F230D6B7E76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

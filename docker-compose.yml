@@ -1,0 +1,41 @@
+version: '3.4'
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    restart: always
+    container_name: 'rabbitmq'
+    ports:
+      - 5672:5672
+      - 3401:15672
+    volumes:
+      - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+      - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq_net
+  mssql_db:
+    container_name: 'mssql_db'
+    image: "mcr.microsoft.com/mssql/server:2019-latest"
+    ports:
+      - "1433:1433"
+    environment:
+      
+      SA_PASSWORD: "BtcTrader-01"
+      ACCEPT_EULA: "Y"
+  
+  instruction.api:
+    image: ${DOCKER_REGISTRY-}instructionapi
+    build:
+    context: .
+    dockerfile: Instruction.Api/Dockerfile
+
+  instruction.consumer:
+    image: ${DOCKER_REGISTRY-}instructionapi
+    build:
+    context: .
+    dockerfile: Instruction.Consumer/Dockerfile
+
+  instruction.publisher:
+    image: ${DOCKER_REGISTRY-}instructionpublisher
+    build:
+    context: .
+    dockerfile: Instruction.Publisher/Dockerfile
